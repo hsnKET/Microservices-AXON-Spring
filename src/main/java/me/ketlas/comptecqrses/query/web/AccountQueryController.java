@@ -2,6 +2,7 @@ package me.ketlas.comptecqrses.query.web;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.ketlas.comptecqrses.commonapi.queries.GetAccountByIdQuery;
 import me.ketlas.comptecqrses.commonapi.queries.GetAllAccountsQuery;
 import me.ketlas.comptecqrses.query.entities.Account;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
@@ -28,10 +29,10 @@ public class AccountQueryController {
         );
     }
 
-    @GetMapping("/byId")
-    public CompletableFuture<Account> accountById(){
+    @GetMapping("/byId/{id}")
+    public CompletableFuture<Account> accountById(String id){
         return queryGateway.query(
-                new GetAllAccountsQuery(),
+                new GetAccountByIdQuery(id),
                 ResponseTypes.instanceOf(Account.class)
         );
     }

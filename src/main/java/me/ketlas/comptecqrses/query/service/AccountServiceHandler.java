@@ -6,6 +6,7 @@ import me.ketlas.comptecqrses.commonapi.events.AccountActivatedEvent;
 import me.ketlas.comptecqrses.commonapi.events.AccountCreatedEvent;
 import me.ketlas.comptecqrses.commonapi.events.AccountCreditedEvent;
 import me.ketlas.comptecqrses.commonapi.events.AccountDebitedEvent;
+import me.ketlas.comptecqrses.commonapi.queries.GetAccountByIdQuery;
 import me.ketlas.comptecqrses.commonapi.queries.GetAllAccountsQuery;
 import me.ketlas.comptecqrses.query.entities.Account;
 import me.ketlas.comptecqrses.query.entities.Operation;
@@ -74,6 +75,11 @@ public class AccountServiceHandler {
     @QueryHandler
     public List<Account> on(GetAllAccountsQuery event){
        return accountRepository.findAll();
+    }
+
+    @QueryHandler
+    public Account on(GetAccountByIdQuery event){
+        return accountRepository.findById(event.getId());
     }
 
 }
