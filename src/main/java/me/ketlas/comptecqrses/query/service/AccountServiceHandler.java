@@ -6,15 +6,18 @@ import me.ketlas.comptecqrses.commonapi.events.AccountActivatedEvent;
 import me.ketlas.comptecqrses.commonapi.events.AccountCreatedEvent;
 import me.ketlas.comptecqrses.commonapi.events.AccountCreditedEvent;
 import me.ketlas.comptecqrses.commonapi.events.AccountDebitedEvent;
+import me.ketlas.comptecqrses.commonapi.queries.GetAllAccountsQuery;
 import me.ketlas.comptecqrses.query.entities.Account;
 import me.ketlas.comptecqrses.query.entities.Operation;
 import me.ketlas.comptecqrses.query.repositories.AccountRepository;
 import me.ketlas.comptecqrses.query.repositories.OperationRepository;
 import org.axonframework.eventhandling.EventHandler;
+import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
@@ -66,6 +69,11 @@ public class AccountServiceHandler {
         operationRepository.save(operation);
         account.setBalance(account.getBalance() + event.getAmount());
         accountRepository.save(account);
+    }
+
+    @QueryHandler
+    public List<Account> on(GetAllAccountsQuery event){
+       return accountRepository.findAll();
     }
 
 }
